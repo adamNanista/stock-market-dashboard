@@ -1,6 +1,6 @@
 "use client";
 
-import { Chart as ChartJS, Legend, registerables } from "chart.js/auto";
+import { Chart as ChartJS, registerables } from "chart.js/auto";
 import { Chart } from "react-chartjs-2";
 
 ChartJS.register(...registerables);

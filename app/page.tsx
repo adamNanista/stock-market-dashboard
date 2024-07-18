@@ -1,33 +1,25 @@
-"use client";
-
-import useSWR from "swr";
 import Link from "next/link";
 
-const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
+async function getMenuData() {
+	const data = await fetch(`https://api.polygon.io/v3/reference/tickers?market=stocks&active=true&limit=10&apiKey=rLdG0SNWBFY4CfpFmtA1l3uMpo7k5eXR`).then((res) => res.json());
 
-function TickerPicker() {
-	const { data, isLoading } = useSWR(`https://api.polygon.io/v3/reference/tickers?active=true&limit=10&apiKey=rLdG0SNWBFY4CfpFmtA1l3uMpo7k5eXR`, fetcher);
-
-	if (isLoading) return <div>Loading...</div>;
-	if (!data) return <div>Fail</div>;
-
-	return (
-		<ul className="flex flex-wrap space-x-4">
-			{data.results.map((ticker: { ticker: string }) => {
-				return (
-					<li key={ticker.ticker}>
-						<Link href={`/stock/${ticker.ticker}`}>{ticker.ticker}</Link>
-					</li>
-				);
-			})}
-		</ul>
-	);
+	return data;
 }
 
-export default function Home() {
+export default async function Home() {
+	const menuData = await getMenuData();
+
 	return (
 		<main>
-			<TickerPicker />
+			<ul className="flex flex-wrap space-x-4">
+				{menuData.results.map((ticker: { ticker: string }) => {
+					return (
+						<li key={ticker.ticker}>
+							<Link href={`/stock/${ticker.ticker}`}>{ticker.ticker}</Link>
+						</li>
+					);
+				})}
+			</ul>
 		</main>
 	);
 }
