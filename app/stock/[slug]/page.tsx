@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 				<h1 className="text-3xl font-black">{data.results.name}</h1>
 				{data.results.description && <p>{data.results.description}</p>}
 			</div>
-			<PriceChart slug={params.slug} />
+			<PriceChart params={params} />
 		</div>
 	);
 }

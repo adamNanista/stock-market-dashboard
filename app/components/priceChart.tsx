@@ -11,7 +11,7 @@ async function getData({ params }: { params: { slug: string } }) {
 	return data;
 }
 
-export default async function PriceChart(params: { slug: string }) {
+export default async function PriceChart({ params }: { params: { slug: string } }) {
 	const data = await getData({ params });
 
 	const labels = data.results?.map((result: { t: number }) => new Date(result.t).toLocaleDateString());
